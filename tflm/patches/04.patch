@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/min.h      2025-03-26 17:58:42.000000000 +0100
++++ "tflite-micro-main/tensorflow/lite/kernels/internal/min.h"  2025-04-04 05:16:01.834345517 +0200
+@@ -19,7 +19,7 @@
+ 
+ namespace tflite {
+ 
+-#if defined(TF_LITE_USE_GLOBAL_MIN) || defined(__ZEPHYR__)
++#if defined(TF_LITE_USE_GLOBAL_MIN) || defined(__ZEPHYR__) || defined(__phoenix__)
+ inline float TfLiteMin(const float& x, const float& y) {
+   return std::min(x, y);
+ }

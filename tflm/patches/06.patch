@@ -1,0 +1,14 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/reference/logistic.h       2025-03-26 17:58:42.000000000 +0100
++++ "tflite-micro-main/tensorflow/lite/kernels/internal/reference/logistic.h" 2025-04-04 05:14:02.796070541 +0200
+@@ -48,9 +48,9 @@
+     if (val > cutoff_upper) {
+       result = 1.0f;
+     } else if (val < cutoff_lower) {
+-      result = std::exp(val);
++      result = exp(val);
+     } else {
+-      result = 1.f / (1.f + std::exp(-val));
++      result = 1.f / (1.f + exp(-val));
+     }
+     output_data[i] = result;
+   }

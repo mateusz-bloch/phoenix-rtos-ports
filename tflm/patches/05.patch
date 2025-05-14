@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/quantization_util.cc       2025-03-26 17:58:42.000000000 +0100
++++ "tflite-micro-main/tensorflow/lite/kernels/internal/quantization_util.cc" 2025-04-04 05:14:02.796070541 +0200
+@@ -396,7 +396,7 @@
+   // Using TfLiteRound instead of std::round and std::log instead of
+   // std::log2 to work around these functions being missing in a toolchain
+   // used in some TensorFlow tests as of May 2018.
+-  const float x_log2 = std::log(x) * (1.0f / std::log(2.0f));
++  const float x_log2 = log(x) * (1.0f / log(2.0f));
+   const float x_log2_rounded = TfLiteRound(x_log2);
+   const float x_log2_fracpart = x_log2 - x_log2_rounded;
+ 

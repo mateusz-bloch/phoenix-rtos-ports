@@ -1,0 +1,12 @@
+--- tflite-micro-main/tensorflow/lite/micro/micro_utils.h       2024-12-15 19:03:13.846056430 +0100
++++ "tflite-micro-main/tensorflow/lite/micro/micro_utils.h"        2024-12-15 19:02:52.499571734 +0100
+@@ -23,6 +23,9 @@
+ 
+ #include "tensorflow/lite/c/common.h"
+ 
++extern "C" float fminf(float, float);
++extern "C" float fmaxf(float, float);
++
+ namespace tflite {
+ 
+ // Returns number of elements in the shape array.

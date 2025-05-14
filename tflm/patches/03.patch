@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/max.h       2025-03-26 17:58:42.000000000 +0100
++++ "tflite-micro-main/tensorflow/lite/kernels/internal/max.h" 2025-04-04 05:14:02.796070541 +0200
+@@ -19,7 +19,7 @@
+ 
+ namespace tflite {
+ 
+-#if defined(TF_LITE_USE_GLOBAL_MAX) || defined(__ZEPHYR__)
++#if defined(TF_LITE_USE_GLOBAL_MAX) || defined(__ZEPHYR__) || defined(__phoenix__)
+ inline float TfLiteMax(const float& x, const float& y) {
+   return std::max(x, y);
+ }
