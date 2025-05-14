@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/reference/floor_mod.h 2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/kernels/internal/reference/floor_mod2.h        2025-06-04 00:23:06.889937282 +0200
+@@ -26,7 +26,7 @@
+ T FloorMod(T input1, T input2) {
+   struct FloatMod {
+     float operator()(const float lhs, const float rhs) const {
+-      return std::fmod(lhs, rhs);
++      return fmod(lhs, rhs);
+     }
+   };
+   using ModFunc = typename std::conditional<std::is_integral<T>::value,

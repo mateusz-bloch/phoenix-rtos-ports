@@ -1,0 +1,25 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/cppmath.h  2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/kernels/internal/cppmath.h  2025-04-07 01:11:13.391604308 +0200
+@@ -16,11 +16,21 @@
+ #define TENSORFLOW_LITE_KERNELS_INTERNAL_CPPMATH_H_
+ 
+ #include <cmath>
++
++static inline double expm1(double x) {
++  constexpr double threshold = 1e-5;
++  if (std::fabs(x) < threshold) {
++    double x2 = x * x;
++    return x + x2 / 2.0 + x2 * x / 6.0;
++  } else {
++    return exp(x) - 1.0;
++  }
++}
+ 
+ namespace tflite {
+ 
+ #if defined(TF_LITE_USE_GLOBAL_CMATH_FUNCTIONS) || \
+-    (defined(__ANDROID__) && !defined(__NDK_MAJOR__)) || defined(__ZEPHYR__)
++    (defined(__ANDROID__) && !defined(__NDK_MAJOR__)) || defined(__ZEPHYR__) || defined(__phoenix__)
+ #define TF_LITE_GLOBAL_STD_PREFIX
+ #else
+ #define TF_LITE_GLOBAL_STD_PREFIX std

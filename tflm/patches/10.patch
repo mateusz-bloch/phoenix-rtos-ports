@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/micro/kernels/elu.cc      2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/micro/kernels/elu2.cc     2025-06-04 00:11:19.837661599 +0200
+@@ -96,7 +96,7 @@
+   if (input->type == kTfLiteInt8) {
+     OpData* data = static_cast<OpData*>(node->user_data);
+     TransformFunc transform = [](float value) {
+-      return value < 0.0f ? std::exp(value) - 1.0f : value;
++      return value < 0.0f ? (float)exp(value) - 1.0f : value;
+     };
+     PopulateLookupTable<int8_t>(input, output, transform, data);
+   }
