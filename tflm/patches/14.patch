@@ -1,0 +1,16 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/reference/log_softmax.h       2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/kernels/internal/reference/log_softmax2.h      2025-06-04 00:44:18.284474955 +0200
+@@ -46,11 +46,11 @@
+     // Compute sum.
+     float sum = 0.f;
+     for (int c = 0; c < depth; ++c) {
+-      sum += std::exp(input_data[i * depth + c] - max);
++      sum += exp(input_data[i * depth + c] - max);
+     }
+ 
+     // Compute result.
+-    const float log_sum = std::log(sum);
++    const float log_sum = log(sum);
+     for (int c = 0; c < depth; ++c) {
+       output_data[i * depth + c] = input_data[i * depth + c] - max - log_sum;
+     }

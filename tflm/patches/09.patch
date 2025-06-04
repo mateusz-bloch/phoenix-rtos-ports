@@ -1,0 +1,12 @@
+--- tflite-micro-main/tensorflow/lite/micro/micro_utils.cc      2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/micro/micro_utils_new.cc  2025-06-04 00:00:30.635974029 +0200
+@@ -25,6 +25,9 @@
+ #include "tensorflow/lite/micro/memory_helpers.h"
+ #include "tensorflow/lite/micro/micro_log.h"
+ 
++float fminf(float x, float y) { return __builtin_fminf(x, y); }
++float fmaxf(float x, float y) {return __builtin_fmaxf(x, y); }
++
+ namespace tflite {
+ 
+ int ElementCount(const TfLiteIntArray& dims) {

@@ -1,0 +1,81 @@
+--- tflite-micro-main/tensorflow/lite/micro/kernels/elementwise.cc      2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/micro/kernels/elementwise_new.cc  2025-06-04 15:28:00.000000000 +0200
+@@ -323,16 +323,75 @@
+   return eval_result;
+ }
+ 
++namespace {
++
++constexpr float kPi     = 3.14159265358979323846f;
++constexpr float kTwoPi  = 2.0f * kPi;
++constexpr float kHalfPi = 0.5f * kPi;
++
++
++inline float sin_poly(float x) {
++  const float x2 = x * x;
++  return x * (1.0f
++              - x2 / 6.0f
++              + (x2 * x2) / 120.0f
++              - (x2 * x2 * x2) / 5040.0f
++              + (x2 * x2 * x2 * x2) / 362880.0f);
++}
++
++float sin_approx(float x) {
++
++  x = fmod(x, kTwoPi);
++  if (x >  kPi) x -= kTwoPi;
++  if (x < -kPi) x += kTwoPi;
++
++  // dalsza redukcja + symetrie
++  if (x >  kHalfPi)      x =  kPi - x;   // Q2
++  else if (x < -kHalfPi) x = -kPi - x;   // Q3
++
++  return sin_poly(x);                    // dla |x| ≤ π/2
++}
++
++
++inline float cos_approx(float x) { return sin_approx(x + kHalfPi); }
++
++float log_approx(float x) {
++  if (x <= 0.f) return -999999.f;
++
++  int exp2;                              // x = m * 2^exp2, 0.5 ≤ m < 1
++  float mant = frexp(x, &exp2);
++
++
++  if (mant < 0.7071067811865476f) {
++    mant *= 2.f;
++    --exp2;
++  }
++
++
++  const float z  = (mant - 1.f) / (mant + 1.f);
++  const float z2 = z * z;
++  const float ln_mant = 2.f * ( z
++                              + z2 * z / 3.f
++                              + (z2 * z2) * z / 5.f
++                              + (z2 * z2 * z2) * z / 7.f );
++
++  constexpr float kLn2 = 0.6931471805599453f;
++  return ln_mant + exp2 * kLn2;
++}
++
++}  // namespace
++
++
+ TfLiteStatus SinEval(TfLiteContext* context, TfLiteNode* node) {
+-  return EvalNumeric(context, node, std::sin);
++  return EvalNumeric(context, node, sin_approx);
+ }
+ 
+ TfLiteStatus CosEval(TfLiteContext* context, TfLiteNode* node) {
+-  return EvalNumeric(context, node, std::cos);
++  return EvalNumeric(context, node, cos_approx);
+ }
+ 
+ TfLiteStatus LogEval(TfLiteContext* context, TfLiteNode* node) {
+-  return EvalNumeric(context, node, std::log);
++  return EvalNumeric(context, node, log_approx);
+ }
+ 
+ TfLiteStatus SqrtEval(TfLiteContext* context, TfLiteNode* node) {

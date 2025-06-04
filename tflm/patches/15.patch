@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/micro/kernels/softmax_common.cc   2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/micro/kernels/softmax_common2.cc  2025-06-04 00:49:49.904974988 +0200
+@@ -61,7 +61,7 @@
+                           std::numeric_limits<int16_t>::min();
+     LUTPopulate<int16_t>(
+         10.0f / range, std::numeric_limits<int16_t>::max(), 2.0f / range, 0,
+-        [](float value) { return std::exp(value); }, op_data->exp_lut);
++        [](float value) { return (float)exp(value); }, op_data->exp_lut);
+ 
+     LUTPopulate<int16_t>(
+         1.0f / range, std::numeric_limits<int16_t>::min(), 2.0f / range, 0,
