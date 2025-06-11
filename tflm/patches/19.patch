@@ -1,0 +1,33 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/reference/lstm_cell.h 2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/kernels/internal/reference/lstm_cell2.h        2025-06-08 05:42:43.347194007 +0200
+@@ -115,17 +115,17 @@
+         for (int c = 0; c < output_depth; ++c) {
+           const float input_gate =
+               1.f /
+-              (1.f + std::exp(-activ_temp_data[Offset(activ_temp_shape, b, h, w,
++              (1.f + exp(-activ_temp_data[Offset(activ_temp_shape, b, h, w,
+                                                       0 * output_depth + c)]));
+-          const float new_input = std::tanh(activ_temp_data[Offset(
++          const float new_input = tanh(activ_temp_data[Offset(
+               activ_temp_shape, b, h, w, 1 * output_depth + c)]);
+           const float forget_gate =
+               1.f /
+-              (1.f + std::exp(-activ_temp_data[Offset(activ_temp_shape, b, h, w,
++              (1.f + exp(-activ_temp_data[Offset(activ_temp_shape, b, h, w,
+                                                       2 * output_depth + c)]));
+           const float output_gate =
+               1.f /
+-              (1.f + std::exp(-activ_temp_data[Offset(activ_temp_shape, b, h, w,
++              (1.f + exp(-activ_temp_data[Offset(activ_temp_shape, b, h, w,
+                                                       3 * output_depth + c)]));
+           const float new_state =
+               input_gate * new_input +
+@@ -133,7 +133,7 @@
+                   prev_state_data[Offset(prev_state_shape, b, h, w, c)];
+           output_state_data[Offset(output_state_shape, b, h, w, c)] = new_state;
+           output_activ_data[Offset(output_activ_shape, b, h, w, c)] =
+-              output_gate * std::tanh(new_state);
++              output_gate * tanh(new_state);
+         }
+       }
+     }

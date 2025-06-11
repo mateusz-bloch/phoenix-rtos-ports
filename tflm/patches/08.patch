@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/reference/tanh.h      2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/kernels/internal/reference/tanh_new.h  2025-06-03 23:21:09.187993480 +0200
+@@ -32,7 +32,7 @@
+   const int flat_size = MatchingFlatSize(input_shape, output_shape);
+ 
+   for (int i = 0; i < flat_size; i++) {
+-    output_data[i] = static_cast<T>(std::tanh(input_data[i]));
++    output_data[i] = static_cast<T>(tanh(input_data[i]));
+   }
+ }
+ 

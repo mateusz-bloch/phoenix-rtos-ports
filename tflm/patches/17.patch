@@ -1,0 +1,18 @@
+--- tflite-micro-main/tensorflow/lite/micro/kernels/micro_tensor_utils.cc       2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/micro/kernels/micro_tensor_utils2.cc      2025-06-08 05:38:12.965357840 +0200
+@@ -33,13 +33,13 @@
+ void PortableApplySigmoidToVector(const float* vector, int v_size,
+                                   float* result) {
+   for (int v = 0; v < v_size; v++) {
+-    result[v] = 1.0f / (1.0f + std::exp(-vector[v]));
++    result[v] = 1.0f / (1.0f + exp(-vector[v]));
+   }
+ }
+ 
+ void PortableApplyTanhToVector(const float* vector, int v_size, float* result) {
+   for (int v = 0; v < v_size; v++) {
+-    result[v] = std::tanh(vector[v]);
++    result[v] = tanh(vector[v]);
+   }
+ }
+ 

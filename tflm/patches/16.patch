@@ -1,0 +1,20 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cc    2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/kernels/internal/reference/portable_tensor_utils2.cc   2025-06-08 05:36:10.849586399 +0200
+@@ -582,7 +582,7 @@
+       const int index = batch * n_input + i;
+       const float float_input =
+           input[index] * static_cast<float>(std::pow(2, -12));
+-      const float float_output = 1.0f / (1.0f + std::exp(-float_input));
++      const float float_output = 1.0f / (1.0f + exp(-float_input));
+       const int32_t quant_output = static_cast<int32_t>(
+           float_output * static_cast<float>(std::pow(2, 15)));
+       const int32_t quant_output_clamped =
+@@ -639,7 +639,7 @@
+       const int index = batch * n_input + i;
+       const float float_input =
+           input[index] * std::pow(two, static_cast<double>(integer_bits));
+-      const float float_output = std::tanh(float_input);
++      const float float_output = tanh(float_input);
+       const int32_t quant_output = static_cast<int32_t>(
+           float_output * static_cast<float>(std::pow(2, 15)));
+       const int32_t quant_output_clamped =

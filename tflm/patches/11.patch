@@ -1,0 +1,11 @@
+--- tflite-micro-main/tensorflow/lite/kernels/internal/reference/exp.h       2025-04-04 19:16:17.000000000 +0200
++++ tflite-micro-main/tensorflow/lite/kernels/internal/reference/exp2.h      2025-06-04 00:13:16.040891252 +0200
+@@ -28,7 +28,7 @@
+                 T* output_data) {
+   ruy::profiler::ScopeLabel label("Exp");
+   for (size_t idx = 0; idx < num_elements; ++idx) {
+-    output_data[idx] = std::exp(input_data[idx]);
++    output_data[idx] = exp(input_data[idx]);
+   }
+ }
+ 
